@@ -26,6 +26,12 @@ Stem a list of words:
 >>> print stemmer.stemWords(['cycling', 'cyclist'])
 ['cycl', 'cyclist']
 
+Strings which are supplied are assumed to be UTF-8 encoded.
+We can use unicode input, too:
+
+>>> print stemmer.stemWords(['cycling', u'cyclist'])
+['cycl', u'cyclist']
+
 Each instance of the stemming algorithms uses a cache to speed up processing of
 common words.  By default, the cache holds 10000 words, but this may be
 modified.  The cache may be disabled entirely by setting the cache size to 0:
