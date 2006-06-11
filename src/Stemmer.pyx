@@ -44,6 +44,10 @@ cdef extern from "libstemmer.h":
 
 def algorithms():
     """Get a list of the names of the available stemming algorithms.
+    
+    Note that there are also aliases for these algorithm names, which are
+    not included in this list.  This list is guaranteed to contain
+    precisely one entry for each available stemming algorithm.
 
     """
     cdef char ** algs
@@ -58,6 +62,33 @@ def algorithms():
     return py_algs
 
 cdef class Stemmer:
+    """An instance of a stemming algorithm.
+
+    The algorithm has internal state, so must not be called concurrently.
+    ie, only a single thread should access the instance at any given time.
+
+    When creating a `Stemmer` object, there is one required argument: the
+    name of the algorithm to use in the new stemmer.  A list of the valid
+    algorithm names may be obtained by calling the `algorithms()` function
+    in this module.  In addition, the appropriate stemming algorithm for a
+    given language may be obtained by using the 2 or 3 letter ISO 639
+    language codes.
+
+    A second optional argument to the constructor for `Stemmer` is the size
+    of cache to use.  The cache implemented in this module is not terribly
+    efficient, but benchmarks show that it approximately doubles
+    performance for typical text processing operations, without too much
+    memory overhead.  The cache may be disabled by passing a size of 0.
+    The default size (10000 words) is probably appropriate in most
+    situations.  In pathological cases (for example, when no word is
+    presented to the stemming algorithm more than once, so the cache is
+    useless), the cache can severely damage performance.
+
+    The "benchmark.py" script supplied with the PyStemmer distribution can
+    be used to test the performance of the stemming algorithms with various
+    cache sizes.
+
+    """
     cdef sb_stemmer * cobj
     cdef object cache
     cdef object counter
@@ -66,11 +97,7 @@ cdef class Stemmer:
     def __init__ (self, algorithm, int maxCacheSize = 10000):
         """Initialise a stemmer.
 
-        `algorithm` is the algorithm to use in the new stemmer.
-
-        A list of the valid algorithms may be obtained by calling FIXME.  (Note
-        that there are also aliases for these algorithm names, which are not
-        included in this list.)
+        See the class documentation for details.
 
         """
         self.cobj = sb_stemmer_new(algorithm, 'UTF_8')
@@ -87,6 +114,10 @@ cdef class Stemmer:
         """Maximum number of entries to allow in the cache.
 
         This may be set to zero to disable the cache entirely.
+
+        The maximum cache size may be set at any point - setting the
+        maximum size will purge entries from the cache if the new maximum
+        size is smaller than the current size.
 
         """
         def __set__(self, int size):
@@ -110,6 +141,17 @@ cdef class Stemmer:
         self.cache = newcache
 
     def stemWord (self, word):
+        """Stem a word.
+
+        This takes a single argument, ``word``, which should either be a UTF-8
+        encoded string, or a unicode object.
+
+        The result is the stemmed form of the word.  If the word supplied
+        was a unicode object, the result will be a unicode object: if the
+        word supplied was a string, the result will be a UTF-8 encoded
+        string.
+
+        """
         cdef char * c_word
         was_unicode = 0
         if isinstance(word, unicode):
@@ -141,6 +183,20 @@ cdef class Stemmer:
         return result
 
     def stemWords (self, words):
+        """Stem a list of words.
+
+        This takes a single argument, ``words``, which must be a sequence,
+        iterator, generator or similar.
+
+        The entries in ``words`` should either be UTF-8 encoded strings, or a
+        unicode objects.
+
+        The result is a list of the stemmed forms of the words.  If the
+        word supplied was a unicode object, the stemmed form will be a
+        unicode object: if the word supplied was a string, the stemmed form
+        will be a UTF-8 encoded string.
+
+        """
         result = []
         for word in words:
             result.append(self.stemWord(word))
