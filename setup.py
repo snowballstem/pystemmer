@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from distutils.core import setup, Extension
+from Pyrex.Distutils import build_ext
 import os.path
 
 library_dir = 'libstemmer_c'
@@ -12,7 +13,7 @@ src_files = [os.path.join(library_dir, line.strip())
              if len(line.strip()) > 2
              and line.strip()[-2:] == '.c'
              and os.path.split(line.strip())[0] in library_core_dirs]
-src_files.append('src/Stemmer.c')
+src_files.append('src/Stemmer.pyx')
 include_dirs = ('src', os.path.join(library_dir, 'include'))
 
 setup(name = 'PyStemmer',
@@ -22,5 +23,6 @@ setup(name = 'PyStemmer',
       author_email = 'richard@tartarus.org',
 
       ext_modules = [Extension('Stemmer', src_files,
-                               include_dirs = include_dirs)]
+                               include_dirs = include_dirs)],
+      cmdclass = {'build_ext': build_ext}
      )

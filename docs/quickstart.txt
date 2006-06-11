@@ -5,36 +5,35 @@ This is a very brief introduction to the use of PyStemmer.
 
 First, import the library:
 
->>> from Stemmer import Stemmer
+>>> import Stemmer
 
 Just for show, we'll display a list of the available stemming algorithms:
 
->>> print Stemmer.stemmers
-('english', ...)
+>>> print Stemmer.algorithms()
+['danish', 'dutch', 'english', 'finnish', 'french', 'german', 'italian', 'norwegian', 'porter', 'portuguese', 'russian', 'spanish', 'swedish']
 
 Now, we'll get an instance of the english stemming algorithm:
 
->>> stemmer = Stemmer('english')
+>>> stemmer = Stemmer.Stemmer('english')
 
 Stem a single word:
 
 >>> print stemmer.stemWord('cycling')
 cycl
 
-Stem a list of words (stemWords() returns the stemmed words one-by-one using a
-generator, so we use tuple() to display them all here:
+Stem a list of words:
 
->>> print tuple(stemmer.stemWords(['cycling', 'cyclist']))
-('cycl', 'cyclist')
+>>> print stemmer.stemWords(['cycling', 'cyclist'])
+['cycl', 'cyclist']
 
 Each instance of the stemming algorithms uses a cache to speed up processing of
 common words.  By default, the cache holds 10000 words, but this may be
 modified.  The cache may be disabled entirely by setting the cache size to 0:
 
->>> print stemmer.cacheSize
+>>> print stemmer.maxCacheSize
 10000
 
->>> stemmer.cacheSize = 1000
+>>> stemmer.maxCacheSize = 1000
 
->>> print stemmer.cacheSize
+>>> print stemmer.maxCacheSize
 1000
