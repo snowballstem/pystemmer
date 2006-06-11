@@ -49,18 +49,19 @@ API
 ---
 
   PyStemmer's API is documented by documentation comments, which may
-  conveniently be viewed using the epydoc output present in the doc/
+  conveniently be viewed using the epydoc output present in the docs/html/
   subdirectory.
 
-  A very brief overview can be found in doc/quickstart.txt
+  A brief overview can be found in docs/quickstart.txt
 
 License
 -------
 
   PyStemmer is copyright (c) 2006, Richard Boulton, and is licensed under
   the MIT license: see the file "LICENSE" for the full text of this.  It is
-  derived from an earlier implementation which is copyright (c) 2001,
-  Andreas Jung, and also licensed under the MIT license.
+  was inspired by an earlier implementation (which was copyright (c) 2001,
+  Andreas Jung, and also licensed under the MIT license, but no portions of
+  which remain in this package, and had a different API).
 
   The snowball algorithms, and the snowball library, are copyright (c)
   2001-2006, Dr Martin Porter and Richard Boulton, and are licensed under
