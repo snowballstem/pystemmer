@@ -40,19 +40,20 @@ Stemming algorithms
 
 PyStemmer provides access to efficient algorithms for calculating a
 "stemmed" form of a word.  This is a form with most of the common
-morphological endings removed; hopefully representing a common linguistic
-base form.  This is most useful in building search engines and information
-retrieval software; for example, a search with stemming enabled should be
-able to find a document containing "cycling" given the query "cycles".
-      
-PyStemmer provides algorithms for several (mainly european) languages, by
-wrapping the libstemmer library from the Snowball project in a Python
+morphological endings removed; hopefully representing a common
+linguistic base form.  This is most useful in building search engines
+and information retrieval software; for example, a search with stemming
+enabled should be able to find a document containing "cycling" given the
+query "cycles".
+
+PyStemmer provides algorithms for several (mainly european) languages,
+by wrapping the libstemmer library from the Snowball project in a Python
 module.
 
 It also provides access to the classic Porter stemming algorithm for
 english: although this has been superceded by an improved algorithm, the
-original algorithm may be of interest to information retrieval researchers
-wishing to reproduce results of earlier experiments.
+original algorithm may be of interest to information retrieval
+researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
@@ -63,8 +64,19 @@ setup(name = 'PyStemmer',
       maintainer = 'Richard Boulton',
       maintainer_email = 'richard@tartarus.org',
       url = 'http://snowball.tartarus.org/',
+      download_url = 'http://snowball.tartarus.org/wrappers/PyStemmer-1.0.tar.gz',
       description = 'Snowball stemming algorithms, for information retrieval',
       long_description = long_description,
+      platforms = ["any"],
+      license = ["MIT", "BSD"],
+      keywords = [
+      "python",
+      "information retrieval",
+      "language processing",
+      "morphological analysis",
+      "stemming algorithms",
+      "stemmers"
+      ],
       classifiers = [
       "Development Status :: 5 - Production/Stable",
       "Intended Audience :: Developers",

@@ -32,8 +32,7 @@ What is PyStemmer?
 Requirements
 ------------
 
-  PyStemmer should work with Python version 2.1 or higher.
-  (It was originally developed using Python version 2.4.3.)
+  PyStemmer has been developed and tested using Python version 2.4.3.
 
 Installation
 ------------
