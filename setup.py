@@ -33,28 +33,64 @@ else:
     # Add just the C sources.
     src_files.append('src/Stemmer.c')
     cmdclass = {}
+      
+long_description = r"""
+
+Stemming algorithms
+
+PyStemmer provides access to efficient algorithms for calculating a
+"stemmed" form of a word.  This is a form with most of the common
+morphological endings removed; hopefully representing a common linguistic
+base form.  This is most useful in building search engines and information
+retrieval software; for example, a search with stemming enabled should be
+able to find a document containing "cycling" given the query "cycles".
+      
+PyStemmer provides algorithms for several (mainly european) languages, by
+wrapping the libstemmer library from the Snowball project in a Python
+module.
+
+It also provides access to the classic Porter stemming algorithm for
+english: although this has been superceded by an improved algorithm, the
+original algorithm may be of interest to information retrieval researchers
+wishing to reproduce results of earlier experiments.
+
+""".strip()
 
 setup(name = 'PyStemmer',
-      version = '0.9',
+      version = '1.0',
       author = 'Richard Boulton',
       author_email = 'richard@tartarus.org',
       maintainer = 'Richard Boulton',
       maintainer_email = 'richard@tartarus.org',
       url = 'http://snowball.tartarus.org/',
       description = 'Snowball stemming algorithms, for information retrieval',
-      long_description = """
-      PyStemmer provides access to efficient algorithms for calculating a
-      "stemmed" form of a word.  This is a form with most of the common
-      morphological endings removed; hopefully representing a common linguistic
-      base form.  This is most useful in building search engines and
-      information retrieval software; for example, a search with stemming
-      enabled should be able to find a document containing "cycling" given the
-      query "cycles".
-      
-      PyStemmer provides algorithms for several (mainly european) languages,
-      by wrapping the libstemmer library from the Snowball project in a
-      Python module.
-      """
+      long_description = long_description,
+      classifiers = [
+      "Development Status :: 5 - Production/Stable",
+      "Intended Audience :: Developers",
+      "License :: OSI Approved :: MIT License",
+      "License :: OSI Approved :: BSD License",
+      "Natural Language :: Danish",
+      "Natural Language :: Dutch",
+      "Natural Language :: English",
+      "Natural Language :: Finnish",
+      "Natural Language :: French",
+      "Natural Language :: German",
+      "Natural Language :: Italian",
+      "Natural Language :: Norwegian",
+      "Natural Language :: Portuguese",
+      "Natural Language :: Russian",
+      "Natural Language :: Spanish",
+      "Natural Language :: Swedish",
+      "Operating System :: OS Independent",
+      "Programming Language :: C",
+      "Programming Language :: Other",
+      "Programming Language :: Python",
+      "Topic :: Database",
+      "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+      "Topic :: Text Processing :: Indexing",
+      "Topic :: Text Processing :: Linguistic",
+      ],
 
       ext_modules = [Extension('Stemmer', src_files,
                                include_dirs = include_dirs)],

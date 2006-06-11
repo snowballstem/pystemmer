@@ -49,6 +49,13 @@ def algorithms():
     not included in this list.  This list is guaranteed to contain
     precisely one entry for each available stemming algorithm.
 
+    Note that the the classic Porter stemming algorithm for English is
+    available by default: although this has been superceded by an improved
+    algorithm, the original algorithm may be of interest to information
+    retrieval researchers wishing to reproduce results of earlier
+    experiments.  Most users will want to use the "english" algorithm,
+    instead of the "porter" algorithm.
+
     """
     cdef char ** algs
     cdef int i

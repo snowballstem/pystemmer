@@ -3,9 +3,9 @@ License for PyStemmer
 
 PyStemmer is copyright (c) 2006, Richard Boulton
 
-It is very loosely based on an earlier version of PyStemmer (version 0.10,
-copyright (C) 2001, Andreas Jung), but uses very little of the original
-implementation.
+It was inspired by an earlier implementation of PyStemmer (version 0.10, which
+was copyright (c) 2001, Andreas Jung, and also licensed under the MIT license,
+but no portions of which remain in this package, and had a different API).
 
 Both Andreas Jung's implementation and this implementation are covered by the
 following license.
