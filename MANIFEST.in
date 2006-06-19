@@ -1,4 +1,4 @@
-include LICENSE
+include LICENSE ChangeLog HACKING
 recursive-include libstemmer_c *
 recursive-include sampledata *
 recursive-include docs *

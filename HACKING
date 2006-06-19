@@ -1,0 +1,18 @@
+Release checklist
+=================
+
+ * Update ChangeLog to describe what's changed.
+
+ * Increase the version number.
+
+ * Check that version string in setup.py matches that in Stemmer.pyx
+
+ * Run ./makedist.sh to build and test package.
+
+ * Copy generated package to website, in wrappers subdirectory.
+
+ * Update the following pages to point to the latest package:
+   * download.php
+   * wrappers/guide.html
+
+ * Update the package entry on PyPI, using "python setup.py register"

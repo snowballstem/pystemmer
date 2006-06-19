@@ -11,9 +11,10 @@ except:
 
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
+
 # Directories in libstemmer which contain libstemmer sources (ie, not
 # examples, etc).
-library_core_dirs = set(('src_c', 'runtime', 'libstemmer', 'include'))
+library_core_dirs = ('src_c', 'runtime', 'libstemmer', 'include')
 
 # Read the manifest of files in libstemmer.
 src_files = [os.path.join(library_dir, line.strip())
@@ -21,6 +22,7 @@ src_files = [os.path.join(library_dir, line.strip())
              if len(line.strip()) > 2
              and line.strip()[-2:] == '.c'
              and os.path.split(line.strip())[0] in library_core_dirs]
+
 # Set the include path to include libstemmer.
 include_dirs = ('src', os.path.join(library_dir, 'include'))
 
@@ -57,14 +59,15 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
+version_str = '1.0.1'
 setup(name = 'PyStemmer',
-      version = '1.0',
+      version = version_str,
       author = 'Richard Boulton',
       author_email = 'richard@tartarus.org',
       maintainer = 'Richard Boulton',
       maintainer_email = 'richard@tartarus.org',
       url = 'http://snowball.tartarus.org/',
-      download_url = 'http://snowball.tartarus.org/wrappers/PyStemmer-1.0.tar.gz',
+      download_url = 'http://snowball.tartarus.org/wrappers/PyStemmer-%s.tar.gz' % version_str,
       description = 'Snowball stemming algorithms, for information retrieval',
       long_description = long_description,
       platforms = ["any"],
@@ -108,3 +111,4 @@ setup(name = 'PyStemmer',
                                include_dirs = include_dirs)],
       cmdclass = cmdclass
      )
+

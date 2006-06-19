@@ -27,8 +27,6 @@ __docformat__ = "restructuredtext en"
 # "epydoc" tool.  Invoke it by compiling this module and then running:
 # "epydoc Stemmer.so".
 
-import encodings
-
 cdef extern from "Python.h":
     object PyString_FromStringAndSize (char * s, int len)
 
@@ -65,8 +63,16 @@ def algorithms():
     while algs[i] != NULL:
         py_algs.append(algs[i])
         i = i + 1
-
     return py_algs
+
+def version():
+    """Get the version string of the stemming module.
+
+    This version number is for the Stemmer module as a whole (not for an
+    individual stemming algorithm).
+
+    """
+    return '1.0.1'
 
 cdef class Stemmer:
     """An instance of a stemming algorithm.
