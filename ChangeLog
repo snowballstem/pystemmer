@@ -3,7 +3,7 @@ Mon Sep 18 02:08:52 BST 2006  Richard Boulton <richard@lemurconsulting.com>
         * setup.py: Read the source files from libstemmer_c/mkinc_utf8.mak,
           instead of MANIFEST.  Should remove unused code from generated
           library which implemented stemming in non-UTF-8 character sets.
-        * Bemb version number to 1.0.2
+        * Bump version number to 1.0.2
 
 Mon Jun 19 07:51:38 BST 2006  Richard Boulton <richard@tartarus.org>
 
