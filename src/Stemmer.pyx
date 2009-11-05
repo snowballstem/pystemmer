@@ -40,12 +40,14 @@ cdef extern from "libstemmer.h":
     cdef sb_symbol *  sb_stemmer_stem(sb_stemmer * stemmer, sb_symbol * word, int size)
     cdef int          sb_stemmer_length(sb_stemmer * stemmer)
 
-def algorithms():
+def algorithms(aliases=False):
     """Get a list of the names of the available stemming algorithms.
     
-    Note that there are also aliases for these algorithm names, which are
-    not included in this list.  This list is guaranteed to contain
-    precisely one entry for each available stemming algorithm.
+    Note that there are also aliases for these algorithm names, which are not
+    included in this list by default.  If the 'aliases' keyword parameter is
+    False, this list is guaranteed to contain precisely one entry for each
+    available stemming algorithm.  Otherwise, all known aliases for algorithms
+    will be included in the list.
 
     Note that the the classic Porter stemming algorithm for English is
     available by default: although this has been superceded by an improved
@@ -72,7 +74,7 @@ def version():
     individual stemming algorithm).
 
     """
-    return '1.0.2'
+    return '1.1.0'
 
 cdef class Stemmer:
     """An instance of a stemming algorithm.

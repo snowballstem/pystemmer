@@ -1,3 +1,11 @@
+Thu Nov 05 22:28:52 GMT 2009  Richard Boulton <richard@lemurconsulting.com>
+
+	* docs/quickstart.txt: Add hungarian stemming algorithm.
+	* setup.py: Bump version number to 1.1.0.
+	* src/Stemmer.pyx: Add aliases parameter to the algorithms()
+	  function to control whether to return alias names for the
+	  algorithms or just the canonical names.
+
 Mon Sep 18 02:08:52 BST 2006  Richard Boulton <richard@lemurconsulting.com>
 
         * setup.py: Read the source files from libstemmer_c/mkinc_utf8.mak,
