@@ -10,7 +10,7 @@ First, import the library:
 Just for show, we'll display a list of the available stemming algorithms:
 
 >>> print Stemmer.algorithms()
-['danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian', 'italian', 'norwegian', 'porter', 'portuguese', 'russian', 'spanish', 'swedish']
+['danish', 'dutch', 'english', 'finnish', 'french', 'german', 'hungarian', 'italian', 'norwegian', 'porter', 'portuguese', 'romanian', 'russian', 'spanish', 'swedish', 'turkish']
 
 Now, we'll get an instance of the english stemming algorithm:
 

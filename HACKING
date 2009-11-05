@@ -7,6 +7,8 @@ Release checklist
 
  * Check that version string in setup.py matches that in Stemmer.pyx
 
+ * Remove MANIFEST, to ensure that an up-to-date version is generated.
+ 
  * Run ./makedist.sh to build and test package.
 
  * Copy generated package to website, in wrappers subdirectory.
