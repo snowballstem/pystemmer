@@ -1,3 +1,12 @@
+Tue Aug 09 16:23:11 BST 2011  Richard Boulton <richard@tartarus.org>
+
+	* *: Patch from Peter Bouda, with some small tweaks, to support
+	  python 3.X.  Tested with python 3.2rc3
+	* Incompatibility: in python 2.X, algorithms() now returns unicode
+	  strings, instead of byte strings.
+	* Update to use latest libstemmer.
+	* Bump version number to 1.2.0
+
 Thu Nov 05 23:44:19 GMT 2009  Richard Boulton <richard@lemurconsulting.com>
 
 	* HACKING: Add a note to avoid me being confused by an out-of-date

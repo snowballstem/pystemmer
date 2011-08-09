@@ -4,7 +4,7 @@ from distutils.core import setup, Extension
 import os.path
 
 try:
-    from Pyrex.Distutils import build_ext
+    from Cython.Distutils import build_ext
     have_pyrex = 1
 except:
     have_pyrex = 0
@@ -59,7 +59,7 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '1.1.0'
+version_str = '1.2.0'
 setup(name = 'PyStemmer',
       version = version_str,
       author = 'Richard Boulton',

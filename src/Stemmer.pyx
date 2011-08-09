@@ -27,14 +27,17 @@ __docformat__ = "restructuredtext en"
 # "epydoc" tool.  Invoke it by compiling this module and then running:
 # "epydoc Stemmer.so".
 
+cdef extern from *:
+    ctypedef char** const_char_ptr_ptr "const char **"
+    
 cdef extern from "Python.h":
-    object PyString_FromStringAndSize (char * s, int len)
+    object PyUnicode_FromStringAndSize (char * s, int len)
 
 cdef extern from "libstemmer.h":
     cdef struct sb_stemmer
     ctypedef unsigned char sb_symbol
 
-    cdef char **      sb_stemmer_list()
+    cdef const_char_ptr_ptr sb_stemmer_list()
     cdef sb_stemmer * sb_stemmer_new(char * algorithm, char * charenc)
     cdef void         sb_stemmer_delete(sb_stemmer * stemmer)
     cdef sb_symbol *  sb_stemmer_stem(sb_stemmer * stemmer, sb_symbol * word, int size)
@@ -57,13 +60,15 @@ def algorithms(aliases=False):
     instead of the "porter" algorithm.
 
     """
-    cdef char ** algs
+    cdef const_char_ptr_ptr algs
     cdef int i
     py_algs = []
     algs = sb_stemmer_list()
     i = 0
     while algs[i] != NULL:
-        py_algs.append(algs[i])
+        alg = algs[i]
+        alg = alg.decode(u"ascii")
+        py_algs.append(alg)
         i = i + 1
     return py_algs
 
@@ -74,7 +79,7 @@ def version():
     individual stemming algorithm).
 
     """
-    return '1.1.0'
+    return '1.2.0'
 
 cdef class Stemmer:
     """An instance of a stemming algorithm.
@@ -115,7 +120,8 @@ cdef class Stemmer:
         See the class documentation for details.
 
         """
-        self.cobj = sb_stemmer_new(algorithm, 'UTF_8')
+        alg = algorithm.encode(u'ascii')
+        self.cobj = sb_stemmer_new(alg, 'UTF_8')
         if self.cobj == NULL:
             raise KeyError("Stemming algorithm '%s' not found" % algorithm)
         self.max_cache_size = maxCacheSize
@@ -171,7 +177,7 @@ cdef class Stemmer:
         was_unicode = 0
         if isinstance(word, unicode):
             was_unicode = 1
-            word = word.encode('utf-8');
+            word = word.encode(u'utf-8');
 
         if self.max_cache_size > 0:
             try:
@@ -183,7 +189,7 @@ cdef class Stemmer:
                 c_word = word
                 c_word = <char*>sb_stemmer_stem(self.cobj, <sb_symbol*>c_word, len(word))
                 length = sb_stemmer_length(self.cobj)
-                result = PyString_FromStringAndSize (c_word, length)
+                result = PyUnicode_FromStringAndSize (c_word, length)
                 self.cache[word] = [result, self.counter]
                 self.counter = self.counter + 1
                 self.__purgeCache()
@@ -191,10 +197,10 @@ cdef class Stemmer:
             c_word = word
             c_word = <char*>sb_stemmer_stem(self.cobj, <sb_symbol*>c_word, len(word))
             length = sb_stemmer_length(self.cobj)
-            result = PyString_FromStringAndSize (c_word, length)
+            result = PyUnicode_FromStringAndSize (c_word, length)
 
-        if was_unicode:
-            return result.decode('utf-8')
+        if not was_unicode:
+            return result.encode(u'utf-8')
         return result
 
     def stemWords (self, words):
