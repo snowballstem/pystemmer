@@ -36,7 +36,11 @@ class PyStemmerEnglishTests(PyStemmerBaseTestCase):
         self.assertEqual(self.stemmer.stemWords(['cycling', 'cyclist']), ['cycl', 'cyclist'])
 
     def test_stemWords_unicode_simple(self):
-        self.assertEqual(self.stemmer.stemWords(['cycling', u'cyclist']), ['cycl', u'cyclist'])
+        # Python 3 removed the u'' literal syntax; 3.3 added it back
+        # So we use the `decode` method to get a Unicode string instead of the u'' syntax
+        unicode_str = b'cyclist'.decode('ascii')
+
+        self.assertEqual(self.stemmer.stemWords(['cycling', unicode_str]), ['cycl', unicode_str])
 
     def get_voc_words_file(self):
         import os
@@ -79,8 +83,16 @@ class PyStemmerRussianTests(PyStemmerBaseTestCase):
         self.stemmer = self.get_stemmer('russian')
 
     def test_stemWord(self):
-        word = u'\u0441\u043e\u0432\u0435\u0440\u0448\u0430\u0442\u044c \u0446\u0438\u043a\u043b \u0440\u0430\u0437\u0432\u0438\u0442\u0438\u044f'
-        stem = u'\u0441\u043e\u0432\u0435\u0440\u0448\u0430\u0442\u044c \u0446\u0438\u043a\u043b \u0440\u0430\u0437\u0432\u0438\u0442'
+        word = b' '.join([
+            b'\xd1\x81\xd0\xbe\xd0\xb2\xd0\xb5\xd1\x80\xd1\x88\xd0\xb0\xd1\x82\xd1\x8c',
+            b'\xd1\x86\xd0\xb8\xd0\xba\xd0\xbb',
+            b'\xd1\x80\xd0\xb0\xd0\xb7\xd0\xb2\xd0\xb8\xd1\x82\xd0\xb8\xd1\x8f'
+            ]).decode('utf-8')
+        stem = b' '.join([
+            b'\xd1\x81\xd0\xbe\xd0\xb2\xd0\xb5\xd1\x80\xd1\x88\xd0\xb0\xd1\x82\xd1\x8c',
+            b'\xd1\x86\xd0\xb8\xd0\xba\xd0\xbb',
+            b'\xd1\x80\xd0\xb0\xd0\xb7\xd0\xb2\xd0\xb8\xd1\x82'
+            ]).decode('utf-8')
         self.assertEqual(self.stemmer.stemWord(word), stem)
 
 
@@ -89,7 +101,7 @@ class PyStemmerHungarianTests(PyStemmerBaseTestCase):
         self.stemmer = self.get_stemmer('hungarian')
 
     def test_stemWord(self):
-        word = u'Fut\xe1s k\xf6zben'
-        stem = u'Fut\xe1s k\xf6z'
+        word = b'Fut\xc3\xa1s k\xc3\xb6zben'.decode('utf-8')
+        stem = b'Fut\xc3\xa1s k\xc3\xb6z'.decode('utf-8')
         self.assertEqual(self.stemmer.stemWord(word), stem)
 
