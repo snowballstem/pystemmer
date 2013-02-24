@@ -5,3 +5,4 @@ libstemmer_c.tgz
 html
 MANIFEST
 Stemmer.so
+.tox
