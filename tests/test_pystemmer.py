@@ -51,7 +51,7 @@ class PyStemmerEnglishTests(PyStemmerBaseTestCase):
         return voc_words_file
 
     def test_stemWord_many_times(self):
-        # This test runs stemWord on a large number of words (15916)
+        # This test runs stemWord on a large number of words (29417)
         # so that we force cache purging to be tested
 
         voc_words_file = self.get_voc_words_file()
