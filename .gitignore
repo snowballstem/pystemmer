@@ -6,3 +6,6 @@ html
 MANIFEST
 Stemmer.so
 .tox
+src/Stemmer.c
+*.pyc
+__pycache__
