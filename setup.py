@@ -2,6 +2,7 @@
 
 from distutils.core import setup, Extension
 import os.path
+import sys
 
 try:
     from Cython.Distutils import build_ext
@@ -11,6 +12,16 @@ except:
 
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
+
+if 'bootstrap' in sys.argv:
+    from tarballfetcher import download_and_extract_tarball
+    download_and_extract_tarball('http://snowball.tartarus.org/dist/libstemmer_c.tgz')
+    sys.argv.remove('bootstrap')
+
+if not os.path.exists(library_dir):
+    sys.stderr.write(
+        'WARNING: Directory `%s` does not exist. ' % library_dir +
+        'To download it, invoke setup.py with `bootstrap`.\n')
 
 # Directories in libstemmer which contain libstemmer sources (ie, not
 # examples, etc).
