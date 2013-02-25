@@ -21,7 +21,7 @@ src_files = [os.path.join(library_dir, line.strip().replace(' \\', ''))
              for line in open(os.path.join(library_dir, 'mkinc_utf8.mak'))
              if len(line.strip()) > 2
              and (line.strip().endswith('.c \\') or line.strip().endswith('.c'))
-             and os.path.split(line.strip())[0] in library_core_dirs]
+             and os.path.split(line.strip().replace(' \\', ''))[0] in library_core_dirs]
 
 # Set the include path to include libstemmer.
 include_dirs = ('src', os.path.join(library_dir, 'include'))
