@@ -1,3 +1,12 @@
+Mon Feb 25 01:25:15 UTC 2013  Richard Boulton <richard@tartarus.org>
+
+	* *: Patches from Marc Abramowitz to improve testing and
+	  documentation.
+	* *: Rebuild with cython >= 0.17 to remove bug in generated code in
+	  python 3.3.
+	* *: Fix bug in setup.py on windows; reported by Marijn van Vliet.
+	* Bump version number to 1.3.0
+
 Tue Aug 09 16:23:11 BST 2011  Richard Boulton <richard@tartarus.org>
 
 	* *: Patch from Peter Bouda, with some small tweaks, to support
