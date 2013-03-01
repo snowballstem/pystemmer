@@ -1,4 +1,4 @@
-import md5
+import hashlib
 import os
 import sys
 import tarfile
@@ -24,7 +24,7 @@ def extract_tarball(tarball_filename):
     sys.stdout.write('DONE\n')
 
 def md5_file(filename):
-    return md5.md5(open(filename).read()).hexdigest()
+    return hashlib.md5(open(filename, 'rb').read()).hexdigest()
 
 def download_and_extract_tarball(tarball_url, tarball_filename=None, expected_md5=None):
     if tarball_filename is None:
