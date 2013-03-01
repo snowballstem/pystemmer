@@ -15,7 +15,9 @@ library_dir = 'libstemmer_c'
 
 if 'bootstrap' in sys.argv:
     from tarballfetcher import download_and_extract_tarball
-    download_and_extract_tarball('http://snowball.tartarus.org/dist/libstemmer_c.tgz')
+    download_and_extract_tarball(
+        'http://snowball.tartarus.org/dist/libstemmer_c.tgz',
+        expected_md5='5e4c9d75c0759c4584b525cd16876ccb')
     sys.argv.remove('bootstrap')
 
 if not os.path.exists(library_dir):
