@@ -8,10 +8,9 @@ python:
   - pypy
 
 before_install:
-  - curl -s http://snowball.tartarus.org/dist/libstemmer_c.tgz | tar xzf -
   - pip install --use-mirrors Cython
 
-install: python setup.py install
+install: python setup.py bootstrap install
 
 before_script: pip install --use-mirrors nose
 
