@@ -9,4 +9,4 @@ if py3k:
 else:
     num_failures, num_tests = doctest.testfile('docs/quickstart.txt')
 
-sys.exit(num_failures)
+sys.exit(1 if num_failures else 0)
