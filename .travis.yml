@@ -8,11 +8,11 @@ python:
   - pypy
 
 before_install:
-  - pip install --use-mirrors Cython
+  - pip install Cython
 
 install: python setup.py bootstrap install
 
-before_script: pip install --use-mirrors nose
+before_script: pip install nose
 
 script:
   - python runtests.py -v
