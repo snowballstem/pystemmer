@@ -52,8 +52,8 @@ def algorithms(aliases=False):
     available stemming algorithm.  Otherwise, all known aliases for algorithms
     will be included in the list.
 
-    Note that the the classic Porter stemming algorithm for English is
-    available by default: although this has been superceded by an improved
+    Note that the classic Porter stemming algorithm for English is
+    available by default: although this has been superseded by an improved
     algorithm, the original algorithm may be of interest to information
     retrieval researchers wishing to reproduce results of earlier
     experiments.  Most users will want to use the "english" algorithm,

@@ -50,7 +50,7 @@ will need to download a copy of libstemmer_c and unpack it -- e.g.:
 The above step is unncessary if you've downloaded a source distribution of
 PyStemmer (i.e.: a .tar.gz or .zip file).
 
-PyStemmer uses distutils, so all that is neccessary to build and install
+PyStemmer uses distutils, so all that is necessary to build and install
 PyStemmer is the usual distutils invocation:
 
     python setup.py install
