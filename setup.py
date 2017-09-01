@@ -84,7 +84,7 @@ setup(name = 'PyStemmer',
       description = 'Snowball stemming algorithms, for information retrieval',
       long_description = long_description,
       platforms = ["any"],
-      license = ["MIT", "BSD"],
+      license = "MIT, BSD",
       keywords = [
       "python",
       "information retrieval",
