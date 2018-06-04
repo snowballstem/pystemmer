@@ -31,8 +31,8 @@ contents of the download.
 Requirements
 ------------
 
-This version of PyStemmer has been tested using Python series 2.6, 2.7, 3.2,
-3.3 and pypy.  Builds are checked with `travis`_:
+This version of PyStemmer has been tested using Python series 2.6, 2.7, 3.3,
+3.4, 3.5, 3.6 and pypy.  Builds are checked with `travis`_:
 
 .. _travis: https://travis-ci.org/snowballstem/pystemmer
 
