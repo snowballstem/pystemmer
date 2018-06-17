@@ -1,54 +1,76 @@
 #!/usr/bin/env python
-
 from distutils.core import setup, Extension
+from distutils.cmd import Command
 import os.path
-import sys
 
 try:
     from Cython.Distutils import build_ext
     have_pyrex = 1
-except:
+except ImportError:
+    from distutils.command.build_ext import build_ext
     have_pyrex = 0
 
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
+src_files = []
 
-if 'bootstrap' in sys.argv:
-    from tarballfetcher import download_and_extract_tarball
-    download_and_extract_tarball(
-        'http://snowball.tartarus.org/dist/libstemmer_c.tgz',
-        expected_md5='6f32f8f81cd6fa0150333ab540af5e27')
-    sys.argv.remove('bootstrap')
 
-if not os.path.exists(library_dir):
-    sys.stderr.write(
-        'WARNING: Directory `%s` does not exist. ' % library_dir +
-        'To download it, invoke setup.py with `bootstrap`.\n')
+class BootstrapCommand(Command):
+    description = 'Download libstemmer_c dependency'
+    user_options = [
+        ('libstemmer-url=', None, 'path to libstemmer c library'),
+        ('libstemmer-md5=', None, 'Expected MD5 for the stemmer'),
+    ]
+
+    def initialize_options(self):
+        self.libstemmer_url = 'http://snowball.tartarus.org/dist/libstemmer_c.tgz'
+        self.libstemmer_md5 = '6f32f8f81cd6fa0150333ab540af5e27'
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        from tarballfetcher import download_and_extract_tarball
+        download_and_extract_tarball(
+            self.libstemmer_url, expected_md5=self.libstemmer_md5)
+
+
+class BuildExtCommand(build_ext):
+    def run(self):
+        if not os.path.exists(library_dir):
+            self.run_command('bootstrap')
+
+        # Read the manifest of files in libstemmer.
+        src_files.extend([os.path.join(library_dir, line.strip().replace(' \\', ''))
+                     for line in open(os.path.join(library_dir, 'mkinc_utf8.mak'))
+                     if len(line.strip()) > 2
+                     and (line.strip().endswith('.c \\') or line.strip().endswith('.c'))
+                     and os.path.split(line.strip().replace(' \\', ''))[0] in library_core_dirs])
+
+        build_ext.run(self)
+
 
 # Directories in libstemmer which contain libstemmer sources (ie, not
 # examples, etc).
 library_core_dirs = ('src_c', 'runtime', 'libstemmer', 'include')
 
-# Read the manifest of files in libstemmer.
-src_files = [os.path.join(library_dir, line.strip().replace(' \\', ''))
-             for line in open(os.path.join(library_dir, 'mkinc_utf8.mak'))
-             if len(line.strip()) > 2
-             and (line.strip().endswith('.c \\') or line.strip().endswith('.c'))
-             and os.path.split(line.strip().replace(' \\', ''))[0] in library_core_dirs]
 
 # Set the include path to include libstemmer.
 include_dirs = ('src', os.path.join(library_dir, 'include'))
+
+cmdclass = {
+    'bootstrap': BootstrapCommand,
+    'build_ext': BuildExtCommand,
+}
 
 if have_pyrex:
     # Add the pyrex sources, and a special rule so distutils knows how to
     # use them.
     src_files.append('src/Stemmer.pyx')
-    cmdclass = {'build_ext': build_ext}
 else:
     # Add just the C sources.
     src_files.append('src/Stemmer.c')
-    cmdclass = {}
-      
+
 long_description = r"""
 
 Stemming algorithms
@@ -73,61 +95,60 @@ researchers wishing to reproduce results of earlier experiments.
 """.strip()
 
 version_str = '1.3.0'
-setup(name = 'PyStemmer',
-      version = version_str,
-      author = 'Richard Boulton',
-      author_email = 'richard@tartarus.org',
-      maintainer = 'Richard Boulton',
-      maintainer_email = 'richard@tartarus.org',
-      url = 'http://snowball.tartarus.org/',
-      download_url = 'http://snowball.tartarus.org/wrappers/PyStemmer-%s.tar.gz' % version_str,
-      description = 'Snowball stemming algorithms, for information retrieval',
-      long_description = long_description,
-      platforms = ["any"],
-      license = "MIT, BSD",
-      keywords = [
-      "python",
-      "information retrieval",
-      "language processing",
-      "morphological analysis",
-      "stemming algorithms",
-      "stemmers"
+setup(name='PyStemmer',
+      version=version_str,
+      author='Richard Boulton',
+      author_email='richard@tartarus.org',
+      maintainer='Richard Boulton',
+      maintainer_email='richard@tartarus.org',
+      url='http://snowball.tartarus.org/',
+      download_url='http://snowball.tartarus.org/wrappers/PyStemmer-%s.tar.gz' % version_str,
+      description='Snowball stemming algorithms, for information retrieval',
+      long_description=long_description,
+      platforms=["any"],
+      license="MIT, BSD",
+      keywords=[
+          "python",
+          "information retrieval",
+          "language processing",
+          "morphological analysis",
+          "stemming algorithms",
+          "stemmers"
       ],
-      classifiers = [
-      "Development Status :: 5 - Production/Stable",
-      "Intended Audience :: Developers",
-      "License :: OSI Approved :: MIT License",
-      "License :: OSI Approved :: BSD License",
-      "Natural Language :: Danish",
-      "Natural Language :: Dutch",
-      "Natural Language :: English",
-      "Natural Language :: Finnish",
-      "Natural Language :: French",
-      "Natural Language :: German",
-      "Natural Language :: Italian",
-      "Natural Language :: Norwegian",
-      "Natural Language :: Portuguese",
-      "Natural Language :: Russian",
-      "Natural Language :: Spanish",
-      "Natural Language :: Swedish",
-      "Operating System :: OS Independent",
-      "Programming Language :: C",
-      "Programming Language :: Other",
-      "Programming Language :: Python",
-      "Programming Language :: Python :: 2",
-      "Programming Language :: Python :: 2.6",
-      "Programming Language :: Python :: 2.7",
-      "Programming Language :: Python :: 3",
-      "Programming Language :: Python :: 3.2",
-      "Programming Language :: Python :: 3.3",
-      "Topic :: Database",
-      "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
-      "Topic :: Text Processing :: Indexing",
-      "Topic :: Text Processing :: Linguistic",
+      classifiers=[
+          "Development Status :: 5 - Production/Stable",
+          "Intended Audience :: Developers",
+          "License :: OSI Approved :: MIT License",
+          "License :: OSI Approved :: BSD License",
+          "Natural Language :: Danish",
+          "Natural Language :: Dutch",
+          "Natural Language :: English",
+          "Natural Language :: Finnish",
+          "Natural Language :: French",
+          "Natural Language :: German",
+          "Natural Language :: Italian",
+          "Natural Language :: Norwegian",
+          "Natural Language :: Portuguese",
+          "Natural Language :: Russian",
+          "Natural Language :: Spanish",
+          "Natural Language :: Swedish",
+          "Operating System :: OS Independent",
+          "Programming Language :: C",
+          "Programming Language :: Other",
+          "Programming Language :: Python",
+          "Programming Language :: Python :: 2",
+          "Programming Language :: Python :: 2.6",
+          "Programming Language :: Python :: 2.7",
+          "Programming Language :: Python :: 3",
+          "Programming Language :: Python :: 3.2",
+          "Programming Language :: Python :: 3.3",
+          "Topic :: Database",
+          "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+          "Topic :: Text Processing :: Indexing",
+          "Topic :: Text Processing :: Linguistic",
       ],
 
-      ext_modules = [Extension('Stemmer', src_files,
-                               include_dirs = include_dirs)],
-      cmdclass = cmdclass
-     )
-
+      ext_modules=[Extension('Stemmer', src_files,
+                             include_dirs=include_dirs)],
+      cmdclass=cmdclass
+      )
