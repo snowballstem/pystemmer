@@ -12,7 +12,7 @@ python:
 before_install:
   - pip install Cython
 
-install: python setup.py bootstrap install
+install: pip install .
 
 before_script: pip install nose
 
