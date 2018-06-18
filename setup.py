@@ -161,7 +161,7 @@ setup(name = 'PyStemmer',
       "stemming algorithms",
       "stemmers"
       ],
-      classifiers=[
+      classifiers = [
       "Development Status :: 5 - Production/Stable",
       "Intended Audience :: Developers",
       "License :: OSI Approved :: MIT License",
@@ -197,4 +197,5 @@ setup(name = 'PyStemmer',
       ext_modules = [Extension('Stemmer', src_files,
                              include_dirs=include_dirs)],
       cmdclass = cmdclass
-      )
+     )
+
