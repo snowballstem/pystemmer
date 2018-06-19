@@ -195,7 +195,7 @@ setup(name = 'PyStemmer',
       ],
 
       ext_modules = [Extension('Stemmer', src_files,
-                             include_dirs=include_dirs)],
+                               include_dirs = include_dirs)],
       cmdclass = cmdclass
      )
 
