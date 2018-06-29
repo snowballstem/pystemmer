@@ -47,7 +47,7 @@ will need to download a copy of libstemmer_c and unpack it -- e.g.:
 
     curl -s http://snowball.tartarus.org/dist/libstemmer_c.tgz | tar xzf -
 
-The above step is unncessary if you've downloaded a source distribution of
+The above step is unnecessary if you've downloaded a source distribution of
 PyStemmer (i.e.: a .tar.gz or .zip file).
 
 PyStemmer uses distutils, so all that is necessary to build and install
