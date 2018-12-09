@@ -9,12 +9,10 @@ python:
   - 3.6
   - pypy
 
-# workaround for https://github.com/travis-ci/travis-ci/issues/9815
 matrix:
   include:
     - python: 3.7
       dist: xenial
-      sudo: true
 
 install: python setup.py bootstrap install
 
