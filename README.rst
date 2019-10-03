@@ -5,7 +5,7 @@ What is PyStemmer?
 ------------------
 
 PyStemmer is a Python interface to the stemming algorithms from the Snowball
-project (http://snowball.tartarus.org/). A stemming algorithm (or stemmer) is a
+project (https://snowballstem.org/). A stemming algorithm (or stemmer) is a
 process for removing the commoner morphological and inflexional endings from
 words in English. Its main use is as part of a term normalisation process that
 is usually done when setting up Information Retrieval systems.  A stemmer aims
@@ -47,7 +47,7 @@ Installation
 To build PyStemmer from a source code checkout (i.e.: Subversion or Git), you
 will need to download a copy of libstemmer_c and unpack it -- e.g.:
 
-    curl -s http://snowball.tartarus.org/dist/libstemmer_c.tgz | tar xzf -
+    curl -s https://snowballstem.org/dist/libstemmer_c.tgz | tar xzf -
 
 The above step is unnecessary if you've downloaded a source distribution of
 PyStemmer (i.e.: a .tar.gz or .zip file).

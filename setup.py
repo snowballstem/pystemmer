@@ -16,8 +16,8 @@ library_dir = 'libstemmer_c'
 if 'bootstrap' in sys.argv:
     from tarballfetcher import download_and_extract_tarball
     download_and_extract_tarball(
-        'http://snowball.tartarus.org/dist/libstemmer_c.tgz',
-        expected_md5='6f32f8f81cd6fa0150333ab540af5e27')
+        'https://snowballstem.org/dist/libstemmer_c.tgz',
+        expected_sha256='054e76f2a05478632f2185025bff0b98952a2b7aed7c4e0960d72ba565de5dfc')
     sys.argv.remove('bootstrap')
 
 if not os.path.exists(library_dir):
@@ -64,7 +64,7 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '1.3.0'
+version_str = '2.0.0'
 setup(name = 'PyStemmer',
       version = version_str,
       author = 'Richard Boulton',

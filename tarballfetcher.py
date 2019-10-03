@@ -23,24 +23,24 @@ def extract_tarball(tarball_filename):
     tarball.extractall('.')
     sys.stdout.write('DONE\n')
 
-def md5_file(filename):
-    return hashlib.md5(open(filename, 'rb').read()).hexdigest()
+def sha256_file(filename):
+    return hashlib.sha256(open(filename, 'rb').read()).hexdigest()
 
-def download_and_extract_tarball(tarball_url, tarball_filename=None, expected_md5=None):
+def download_and_extract_tarball(tarball_url, tarball_filename=None, expected_sha256=None):
     if tarball_filename is None:
         tarball_filename = os.path.basename(urlparse(tarball_url).path)
 
     if not os.path.exists(tarball_filename):
         download_file(tarball_url, tarball_filename)
 
-    if not expected_md5 is None:
-        sys.stdout.write('Checking that MD5 of %s is %s... ' % (tarball_filename, expected_md5))
-        actual_md5 = md5_file(tarball_filename)
-        sys.stdout.write('MD5 is %s. ' % actual_md5)
-        if actual_md5 == expected_md5:
+    if not expected_sha256 is None:
+        sys.stdout.write('Checking that SHA256 of %s is %s... ' % (tarball_filename, expected_sha256))
+        actual_sha256 = sha256_file(tarball_filename)
+        sys.stdout.write('SHA256 is %s. ' % actual_sha256)
+        if actual_sha256 == expected_sha256:
             sys.stdout.write('OK\n')
         else:
-            sys.stdout.write('Incorrect MD5!\n')
+            sys.stdout.write('Incorrect SHA256!\n')
             sys.exit(1)
 
     extract_tarball(tarball_filename)
