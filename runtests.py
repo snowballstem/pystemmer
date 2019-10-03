@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import sys, doctest
+import doctest
+import sys
 
 py3k = sys.version_info >= (3, 0)
 
