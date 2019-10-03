@@ -31,16 +31,16 @@ cdef extern from *:
     ctypedef char** const_char_ptr_ptr "const char **"
     
 cdef extern from "Python.h":
-    object PyUnicode_FromStringAndSize (char * s, int len)
+    object PyUnicode_FromStringAndSize (const char * s, Py_ssize_t len)
 
 cdef extern from "libstemmer.h":
     cdef struct sb_stemmer
     ctypedef unsigned char sb_symbol
 
     cdef const_char_ptr_ptr sb_stemmer_list()
-    cdef sb_stemmer * sb_stemmer_new(char * algorithm, char * charenc)
+    cdef sb_stemmer * sb_stemmer_new(const char * algorithm, const char * charenc)
     cdef void         sb_stemmer_delete(sb_stemmer * stemmer)
-    cdef sb_symbol *  sb_stemmer_stem(sb_stemmer * stemmer, sb_symbol * word, int size)
+    cdef const sb_symbol *  sb_stemmer_stem(sb_stemmer * stemmer, const sb_symbol * word, int size)
     cdef int          sb_stemmer_length(sb_stemmer * stemmer)
 
 def algorithms(aliases=False):
@@ -173,7 +173,7 @@ cdef class Stemmer:
         string.
 
         """
-        cdef char * c_word
+        cdef const char * c_word
         was_unicode = 0
         if isinstance(word, unicode):
             was_unicode = 1
@@ -187,7 +187,7 @@ cdef class Stemmer:
                 self.counter = self.counter + 1
             except KeyError:
                 c_word = word
-                c_word = <char*>sb_stemmer_stem(self.cobj, <sb_symbol*>c_word, len(word))
+                c_word = <const char*>sb_stemmer_stem(self.cobj, <const sb_symbol*>c_word, len(word))
                 length = sb_stemmer_length(self.cobj)
                 result = PyUnicode_FromStringAndSize (c_word, length)
                 self.cache[word] = [result, self.counter]
@@ -195,7 +195,7 @@ cdef class Stemmer:
                 self.__purgeCache()
         else:
             c_word = word
-            c_word = <char*>sb_stemmer_stem(self.cobj, <sb_symbol*>c_word, len(word))
+            c_word = <const char*>sb_stemmer_stem(self.cobj, <const sb_symbol*>c_word, len(word))
             length = sb_stemmer_length(self.cobj)
             result = PyUnicode_FromStringAndSize (c_word, length)
 
