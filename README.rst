@@ -44,18 +44,16 @@ This version of PyStemmer has been tested using Python series 2.6, 2.7, 3.3,
 Installation
 ------------
 
-To build PyStemmer from a source code checkout (i.e.: Subversion or Git), you
-will need to download a copy of libstemmer_c and unpack it -- e.g.:
-
-    curl -s https://snowballstem.org/dist/libstemmer_c.tgz | tar xzf -
-
-The above step is unnecessary if you've downloaded a source distribution of
-PyStemmer (i.e.: a .tar.gz or .zip file).
-
 PyStemmer uses distutils, so all that is necessary to build and install
-PyStemmer is the usual distutils invocation:
+PyStemmer is the usual distutils invocation::
 
     python setup.py install
+
+You can also install using ``pip``:
+
+    * from PyPI: ``pip install pystemmer``
+    * from a local copy of the code: ``pip install .``
+    * from git: ``pip install git+git://github.com/snowballstem/pystemmer``
 
 API
 ---
