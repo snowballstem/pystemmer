@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 import os.path
 import sys
 
-try:
+
+def build_ext(*args, **kwargs):
     from Cython.Distutils import build_ext
-    have_pyrex = 1
-except:
-    have_pyrex = 0
+    return build_ext(*args, **kwargs)
+
 
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
@@ -39,16 +39,8 @@ src_files = [os.path.join(library_dir, line.strip().replace(' \\', ''))
 # Set the include path to include libstemmer.
 include_dirs = ('src', os.path.join(library_dir, 'include'))
 
-if have_pyrex:
-    # Add the pyrex sources, and a special rule so distutils knows how to
-    # use them.
-    src_files.append('src/Stemmer.pyx')
-    cmdclass = {'build_ext': build_ext}
-else:
-    # Add just the C sources.
-    src_files.append('src/Stemmer.c')
-    cmdclass = {}
-      
+src_files.append('src/Stemmer.pyx')
+
 long_description = r"""
 
 Stemming algorithms
@@ -119,14 +111,17 @@ setup(name = 'PyStemmer',
       "Programming Language :: Python :: 3",
       "Programming Language :: Python :: 3.2",
       "Programming Language :: Python :: 3.3",
+      "Programming Language :: Python :: 3.4",
+      "Programming Language :: Python :: 3.5",
+      "Programming Language :: Python :: 3.6",
+      "Programming Language :: Python :: 3.7",
       "Topic :: Database",
       "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
       "Topic :: Text Processing :: Indexing",
       "Topic :: Text Processing :: Linguistic",
       ],
-
+      setup_requires=['Cython>=0.28.5,<1.0'],
       ext_modules = [Extension('Stemmer', src_files,
                                include_dirs = include_dirs)],
-      cmdclass = cmdclass
+      cmdclass = {'build_ext': build_ext}
      )
-

@@ -9,8 +9,10 @@ python:
   - 3.6
   - pypy
 
-before_install:
-  - pip install Cython
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
 
 install: python setup.py bootstrap install
 
