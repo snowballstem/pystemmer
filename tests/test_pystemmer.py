@@ -37,13 +37,8 @@ class PyStemmerEnglishTests(PyStemmerBaseTestCase):
                          ['cycl', 'cyclist'])
 
     def test_stemWords_unicode_simple(self):
-        # Python 3 removed the u'' literal syntax; 3.3 added it back
-        # So we use the `decode` method to get a Unicode string instead of the
-        # u'' syntax
-        unicode_str = b'cyclist'.decode('ascii')
-
-        self.assertEqual(self.stemmer.stemWords(['cycling', unicode_str]),
-                         ['cycl', unicode_str])
+        self.assertEqual(self.stemmer.stemWords(['cycling', u'cyclist']),
+                         ['cycl', u'cyclist'])
 
     def get_voc_words_file(self):
         import os
