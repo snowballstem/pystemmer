@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from setuptools import setup, Command, Extension
+from setuptools import setup, Extension
 import os.path
 import sys
 
@@ -14,49 +14,31 @@ def build_ext(*args, **kwargs):
 library_dir = 'libstemmer_c'
 
 
+if 'bootstrap' in sys.argv:
+    from tarballfetcher import download_and_extract_tarball
+    download_and_extract_tarball(
+        'https://snowballstem.org/dist/libstemmer_c.tgz',
+        expected_sha256='054e76f2a05478632f2185025bff0b98952a2b7aed7c4e0960d72ba565de5dfc')
+    sys.argv.remove('bootstrap')
+
+if not os.path.exists(library_dir):
+    sys.stderr.write(
+        'WARNING: Directory `%s` does not exist. ' % library_dir +
+        'To download it, invoke setup.py with `bootstrap`.\n')
+
 # Directories in libstemmer which contain libstemmer sources (ie, not
 # examples, etc).
 library_core_dirs = ('src_c', 'runtime', 'libstemmer', 'include')
 
+# Read the manifest of files in libstemmer.
+src_files = [os.path.join(library_dir, line.strip().replace(' \\', ''))
+             for line in open(os.path.join(library_dir, 'mkinc_utf8.mak'))
+             if len(line.strip()) > 2
+             and (line.strip().endswith('.c \\') or line.strip().endswith('.c'))
+             and os.path.split(line.strip().replace(' \\', ''))[0] in library_core_dirs]
 
 # Set the include path to include libstemmer.
 include_dirs = ('src', os.path.join(library_dir, 'include'))
-
-
-class BootstrapCommand(Command):
-    description = 'Download libstemmer_c dependency'
-    user_options = [
-        ('libstemmer-url=', None, 'path to libstemmer c library'),
-        ('libstemmer-sha256=', None, 'Expected SHA256 for the tarball'),
-    ]
-
-    def initialize_options(self):
-        self.libstemmer_url = 'https://snowballstem.org/dist/libstemmer_c.tgz'
-        self.libstemmer_sha256 = \
-            '054e76f2a05478632f2185025bff0b98952a2b7aed7c4e0960d72ba565de5dfc'
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        from tarballfetcher import download_and_extract_tarball
-        download_and_extract_tarball(
-            self.libstemmer_url, expected_sha256=self.libstemmer_sha256)
-
-
-class BuildExtCommand(build_ext):
-    def run(self):
-        if not os.path.exists(library_dir):
-            self.run_command('bootstrap')
-
-        # Read the manifest of files in libstemmer.
-        for line in open(os.path.join(library_dir, 'mkinc_utf8.mak')):
-            f = line.strip().replace(' \\', '')
-            if f.endswith('.c') and os.path.split(f)[0] in library_core_dirs:
-                src_files.append(line)
-
-        build_ext.run(self)
-
 
 src_files.append('src/Stemmer.pyx')
 
@@ -142,8 +124,5 @@ setup(name='PyStemmer',
       setup_requires=['Cython>=0.28.5,<1.0'],
       ext_modules=[Extension('Stemmer', src_files,
                              include_dirs=include_dirs)],
-      cmdclass={
-        'bootstrap': BootstrapCommand,
-        'build_ext': BuildExtCommand,
-      }
+      cmdclass={'build_ext': build_ext}
       )
