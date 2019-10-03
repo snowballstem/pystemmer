@@ -58,8 +58,7 @@ You can also install using ``pip``:
 API
 ---
 
-PyStemmer's API is documented by documentation comments, which may conveniently
-be viewed using the epydoc output present in the docs/html/ subdirectory.
+PyStemmer's API is documented by documentation comments.
 
 A brief overview can be found in docs/quickstart.txt
 

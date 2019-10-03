@@ -23,9 +23,6 @@ r"""Stemmer: stemming algorithms from the snowball project.
 
 """
 __docformat__ = "restructuredtext en"
-# Note: formatted documentation can be retrieved from this file using the
-# "epydoc" tool.  Invoke it by compiling this module and then running:
-# "epydoc Stemmer.so".
 
 cdef extern from *:
     ctypedef char** const_char_ptr_ptr "const char **"

@@ -1,7 +1,6 @@
 #!/bin/sh
 
 python setup.py install --install-lib=`pwd`
-epydoc --html -o docs/html Stemmer.so
 
 rm -fr dist
 python setup.py sdist
