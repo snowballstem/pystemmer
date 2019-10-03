@@ -16,7 +16,9 @@ matrix:
     - python: 3.3
       dist: precise
 
-install: python setup.py bootstrap install
+before_install: pip install Cython
+
+install: pip install .
 
 before_script: pip install nose
 
