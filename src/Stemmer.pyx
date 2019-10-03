@@ -76,7 +76,7 @@ def version():
     individual stemming algorithm).
 
     """
-    return '1.3.0'
+    return '2.0.0'
 
 cdef class Stemmer:
     """An instance of a stemming algorithm.
