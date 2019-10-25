@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 
-from Cython.Distutils import build_ext
-from setuptools import setup, Command, Extension
+from setuptools import dist, setup, Command, Extension
 import os.path
 
+# Install Cython before building package.
+dist.Distribution().fetch_build_eggs(['cython>=0.28.5'])
+
+from Cython.Distutils import build_ext
 
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
