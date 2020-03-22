@@ -70,7 +70,8 @@ class LibrarySourceCode:
         :yield str:
         """
         with open(self.manifest_file_path) as file:
-            yield from file
+            for line in file:
+                yield line
 
     def source_code_paths(self):
         """ Find paths to source code files.
