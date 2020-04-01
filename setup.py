@@ -1,59 +1,6 @@
 #!/usr/bin/env python
-
-from Cython.Distutils import build_ext
 from setuptools import setup, Command, Extension
 import os.path
-
-
-# Directory which libstemmer sources are unpacked in.
-library_dir = 'libstemmer_c'
-
-
-# Directories in libstemmer which contain libstemmer sources (ie, not
-# examples, etc).
-library_core_dirs = ('src_c', 'runtime', 'libstemmer', 'include')
-
-
-# Set the include path to include libstemmer.
-include_dirs = ('src', os.path.join(library_dir, 'include'))
-
-
-src_files = ['src/Stemmer.pyx']
-
-
-class BootstrapCommand(Command):
-    description = 'Download libstemmer_c dependency'
-    user_options = [
-        ('libstemmer-url=', None, 'path to libstemmer c library'),
-        ('libstemmer-sha256=', None, 'Expected SHA256 for the tarball'),
-    ]
-
-    def initialize_options(self):
-        self.libstemmer_url = 'https://snowballstem.org/dist/libstemmer_c.tgz'
-        self.libstemmer_sha256 = \
-            '054e76f2a05478632f2185025bff0b98952a2b7aed7c4e0960d72ba565de5dfc'
-
-    def finalize_options(self):
-        pass
-
-    def run(self):
-        from tarballfetcher import download_and_extract_tarball
-        download_and_extract_tarball(
-            self.libstemmer_url, expected_sha256=self.libstemmer_sha256)
-
-
-class BuildExtCommand(build_ext):
-    def run(self):
-        if not os.path.exists(library_dir):
-            self.run_command('bootstrap')
-
-        # Read the manifest of files in libstemmer.
-        for line in open(os.path.join(library_dir, 'mkinc_utf8.mak')):
-            f = line.strip().replace(' \\', '')
-            if f.endswith('.c') and os.path.split(f)[0] in library_core_dirs:
-                src_files.append(os.path.join(library_dir, f))
-
-        build_ext.run(self)
 
 
 long_description = r"""
@@ -80,6 +27,111 @@ researchers wishing to reproduce results of earlier experiments.
 """.strip()
 
 version_str = '2.0.0'
+
+
+class LibrarySourceCode:
+
+    # Directories in libstemmer which contain libstemmer sources (ie, not
+    # examples, etc).
+    LIBRARY_CORE_DIRS = ('src_c', 'runtime', 'libstemmer', 'include')
+    DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c.tgz'
+    DEFAULT_CHECKSUM = \
+        '054e76f2a05478632f2185025bff0b98952a2b7aed7c4e0960d72ba565de5dfc'
+
+    def __init__(self, directory = 'libstemmer_c'):
+        """ Constructor.
+
+        :param str directory: Path to directory where source code should
+            reside.
+        :return void:
+        """
+        self._directory = directory
+
+    @property
+    def manifest_file_path(self):
+        """ Produce a path to the manifest within the source code.
+
+        :return str:
+        """
+        return os.path.join(self._directory, 'mkinc_utf8.mak')
+
+    @property
+    def include_directories(self):
+        """ Return all paths to include during the compilation of extension.
+
+        :return list(str):
+        """
+        return [os.path.join(self._directory, 'include')]
+
+    def iter_manifest_lines(self):
+        """ Open the manifest file from disk and yield its contents, line by
+        line.
+
+        :yield str:
+        """
+        with open(self.manifest_file_path) as file:
+            for line in file:
+                yield line
+
+    def source_code_paths(self):
+        """ Find paths to source code files.
+
+        :return set(str):
+        """
+        paths = set()
+
+        for line in self.iter_manifest_lines():
+            line = line.strip().replace(' \\', '')
+            directory = os.path.split(line)[0]
+            if line.endswith('.c') and directory in self.LIBRARY_CORE_DIRS:
+                paths.add(os.path.join(self._directory, line))
+
+        return paths
+
+    def is_present_on_disk(self):
+        """ Is the source code present on disk?
+
+        :return bool:
+        """
+        return os.path.exists(self._directory)
+
+    def download(self, url=None, checksum=None):
+        """ Download and extract the source code from the web.
+
+        :param str url: Url to the zipped source code.
+        :param str checksum: Sha256 hash of the archive.
+        :return void:
+        """
+        from tarballfetcher import download_and_extract_tarball
+        download_and_extract_tarball(
+            url or self.DEFAULT_URI,
+            expected_sha256=checksum or self.DEFAULT_CHECKSUM)
+
+
+LIBRARY_SOURCE_CODE = LibrarySourceCode()
+if not LIBRARY_SOURCE_CODE.is_present_on_disk():
+    LIBRARY_SOURCE_CODE.download()
+
+
+class BootstrapCommand(Command):
+    description = 'Download libstemmer_c dependency'
+    user_options = [
+        ('libstemmer-url=', None, 'path to libstemmer c library'),
+        ('libstemmer-sha256=', None, 'Expected SHA256 for the tarball'),
+    ]
+
+    def initialize_options(self):
+        self.libstemmer_url = LIBRARY_SOURCE_CODE.DEFAULT_URI
+        self.libstemmer_sha256 = LIBRARY_SOURCE_CODE.DEFAULT_CHECKSUM
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        LIBRARY_SOURCE_CODE.download(
+            self.libstemmer_url, self.libstemmer_sha256)
+
+
 setup(name='PyStemmer',
       version=version_str,
       author='Richard Boulton',
@@ -135,11 +187,13 @@ setup(name='PyStemmer',
           "Topic :: Text Processing :: Indexing",
           "Topic :: Text Processing :: Linguistic",
       ],
-      setup_requires=['Cython>=0.28.5,<1.0'],
-      ext_modules=[Extension('Stemmer', src_files,
-                             include_dirs=include_dirs)],
-      cmdclass={
-        'bootstrap': BootstrapCommand,
-        'build_ext': BuildExtCommand,
-      }
+      setup_requires=['Cython>=0.28.5,<1.0', 'setuptools>=18.0'],
+      ext_modules=[
+        Extension(
+            'Stemmer',
+            ['src/Stemmer.pyx'] + list(LIBRARY_SOURCE_CODE.source_code_paths()),
+            include_dirs=LIBRARY_SOURCE_CODE.include_directories
+        )
+      ],
+      cmdclass={'bootstrap': BootstrapCommand}
       )
