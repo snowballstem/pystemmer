@@ -26,7 +26,7 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '2.0.0'
+version_str = '2.0.1'
 
 
 class LibrarySourceCode:
