@@ -52,11 +52,10 @@ class PyStemmerEnglishTests(PyStemmerBaseTestCase):
         # This test runs stemWord on a large number of words (29417)
         # so that we force cache purging to be tested
 
-        voc_words_file = self.get_voc_words_file()
-
-        for word in voc_words_file:
-            word = word.strip()
-            result = self.stemmer.stemWord(word)
+        with self.get_voc_words_file() as voc_words_file:
+            for word in voc_words_file:
+                word = word.strip()
+                result = self.stemmer.stemWord(word)
 
 
 class PyStemmerFrenchTests(PyStemmerBaseTestCase):
