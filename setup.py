@@ -34,11 +34,11 @@ class LibrarySourceCode:
     # Directories in libstemmer which contain libstemmer sources (ie, not
     # examples, etc).
     LIBRARY_CORE_DIRS = ('src_c', 'runtime', 'libstemmer', 'include')
-    DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c.tgz'
+    DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c-2.1.0.tar.gz'
     DEFAULT_CHECKSUM = \
-        '054e76f2a05478632f2185025bff0b98952a2b7aed7c4e0960d72ba565de5dfc'
+        '8c148d3a27745981d29db4909681ec1bc922950b1ade45a01846edea2fb161e6'
 
-    def __init__(self, directory = 'libstemmer_c'):
+    def __init__(self, directory = 'libstemmer_c-2.1.0'):
         """ Constructor.
 
         :param str directory: Path to directory where source code should
