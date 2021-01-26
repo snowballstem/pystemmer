@@ -34,7 +34,7 @@ Requirements
 Python header files should be installed.
 
 This version of PyStemmer has been tested using Python series 2.6, 2.7, 3.3,
-3.4, 3.5, 3.6, 3.7 and pypy.  Builds are checked with `travis`_:
+3.4, 3.5, 3.6, 3.7, 3.8, 3.9 and pypy.  Builds are checked with `travis`_:
 
 .. _travis: https://travis-ci.org/snowballstem/pystemmer
 
