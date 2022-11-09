@@ -1,0 +1,43 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push, or for pull requests against master
+  push:
+    paths-ignore:
+      - AUTHORS
+      - ChangeLog
+      - README.rst
+      - 'docs/**'
+  pull_request:
+    branches: [ master ]
+    paths-ignore:
+      - AUTHORS
+      - ChangeLog
+      - README.rst
+      - 'docs/**'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: [2.6, 2.7, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 3.10, 3.11, pypy, pypy3]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install Cython
+      run: pip install Cython
+    - name: Install
+      run: pip install .
+    - name: Install nose
+      run: pip install nose
+    - name: Run tests
+      run: |
+        python runtests.py -v \
+        nosetests -v
