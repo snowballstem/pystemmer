@@ -26,7 +26,8 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '2.0.1'
+version_str = '2.2.0'
+libstemmer_c_version = version_str
 
 
 class LibrarySourceCode:
@@ -34,11 +35,12 @@ class LibrarySourceCode:
     # Directories in libstemmer which contain libstemmer sources (ie, not
     # examples, etc).
     LIBRARY_CORE_DIRS = ('src_c', 'runtime', 'libstemmer', 'include')
-    DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c-2.1.0.tar.gz'
+    DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c-%s.tar.gz' % \
+        libstemmer_c_version
     DEFAULT_CHECKSUM = \
         '8c148d3a27745981d29db4909681ec1bc922950b1ade45a01846edea2fb161e6'
 
-    def __init__(self, directory = 'libstemmer_c-2.1.0'):
+    def __init__(self, directory='libstemmer_c-%s' % libstemmer_c_version):
         """ Constructor.
 
         :param str directory: Path to directory where source code should
