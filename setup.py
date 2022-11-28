@@ -38,7 +38,7 @@ class LibrarySourceCode:
     DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c-%s.tar.gz' % \
         libstemmer_c_version
     DEFAULT_CHECKSUM = \
-        '8c148d3a27745981d29db4909681ec1bc922950b1ade45a01846edea2fb161e6'
+        'b941d9fe9cf36b4e2f8d3873cd4d8b8775bd94867a1df8d8c001bb8b688377c3'
 
     def __init__(self, directory='libstemmer_c-%s' % libstemmer_c_version):
         """ Constructor.
