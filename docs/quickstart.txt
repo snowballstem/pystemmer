@@ -10,7 +10,7 @@ First, import the library:
 Just for show, we'll display a list of the available stemming algorithms:
 
 >>> print(Stemmer.algorithms())
-[u'arabic', u'armenian', u'basque', u'catalan', u'danish', u'dutch', u'english', u'finnish', u'french', u'german', u'greek', u'hindi', u'hungarian', u'indonesian', u'irish', u'italian', u'lithuanian', u'nepali', u'norwegian', u'porter', u'portuguese', u'romanian', u'russian', u'serbian', u'spanish', u'swedish', u'tamil', u'turkish', u'yiddish']
+['arabic', 'armenian', 'basque', 'catalan', 'danish', 'dutch', 'english', 'finnish', 'french', 'german', 'greek', 'hindi', 'hungarian', 'indonesian', 'irish', 'italian', 'lithuanian', 'nepali', 'norwegian', 'porter', 'portuguese', 'romanian', 'russian', 'serbian', 'spanish', 'swedish', 'tamil', 'turkish', 'yiddish']
 
 Now, we'll get an instance of the english stemming algorithm:
 
@@ -26,11 +26,11 @@ Stem a list of words:
 >>> print(stemmer.stemWords(['cycling', 'cyclist']))
 ['cycl', 'cyclist']
 
-Strings which are supplied are assumed to be UTF-8 encoded.
-We can use unicode input, too:
+Strings which are supplied are assumed to be unicode.
+We can use UTF-8 encoded input, too:
 
->>> print(stemmer.stemWords(['cycling', u'cyclist']))
-['cycl', u'cyclist']
+>>> print(stemmer.stemWords(['cycling', b'cyclist']))
+['cycl', b'cyclist']
 
 Each instance of the stemming algorithms uses a cache to speed up processing of
 common words.  By default, the cache holds 10000 words, but this may be
