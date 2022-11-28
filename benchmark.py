@@ -23,5 +23,5 @@ for line in open('%s'):
                          stmt='stemmer.stemWords(words)')
         for iters in (1, 2, 3, 10):
             times = [time / iters for time in t.repeat(5, iters)]
-            print "'%s':words=%d,cacheSize=%d,iters=%d,mintime=%f" % \
-                (datafile, len(words), cache_size, iters, min(times))
+            print("'%s':words=%d,cacheSize=%d,iters=%d,mintime=%f" %
+                  (datafile, len(words), cache_size, iters, min(times)))
