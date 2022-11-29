@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, Command, Extension
-import os.path
+import os
 
 
 long_description = r"""
@@ -111,8 +111,22 @@ class LibrarySourceCode:
 
 
 LIBRARY_SOURCE_CODE = LibrarySourceCode()
-if not LIBRARY_SOURCE_CODE.is_present_on_disk():
-    LIBRARY_SOURCE_CODE.download()
+
+SYSTEM_LIBSTEMMER = os.environ.get('PYSTEMMER_SYSTEM_LIBSTEMMER', False)
+if SYSTEM_LIBSTEMMER:
+    C_EXTENSION = Extension(
+        'Stemmer',
+        ['src/Stemmer.pyx'],
+        libraries=['stemmer'],
+    )
+else:
+    if not LIBRARY_SOURCE_CODE.is_present_on_disk():
+        LIBRARY_SOURCE_CODE.download()
+    C_EXTENSION = Extension(
+        'Stemmer',
+        ['src/Stemmer.pyx'] + list(LIBRARY_SOURCE_CODE.source_code_paths()),
+        include_dirs=LIBRARY_SOURCE_CODE.include_directories
+    )
 
 
 class BootstrapCommand(Command):
@@ -194,11 +208,7 @@ setup(name='PyStemmer',
       ],
       setup_requires=['Cython>=0.28.5,<1.0', 'setuptools>=18.0'],
       ext_modules=[
-        Extension(
-            'Stemmer',
-            ['src/Stemmer.pyx'] + list(LIBRARY_SOURCE_CODE.source_code_paths()),
-            include_dirs=LIBRARY_SOURCE_CODE.include_directories
-        )
+          C_EXTENSION
       ],
       cmdclass={'bootstrap': BootstrapCommand}
       )
