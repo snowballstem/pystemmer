@@ -27,8 +27,10 @@ researchers wishing to reproduce results of earlier experiments.
 """.strip()
 
 version_str = '2.2.0'
-libstemmer_c_version = version_str
-
+# libstemmer_c versions have 3 components but pystemmer versions may have more
+# (so we can address a pystemmer-specific issue without having to wait for the
+# next libstemmer_c release) so take the first 3 components from version_str.
+libstemmer_c_version = '.'.join(version_str.split('.')[0:3])
 
 class LibrarySourceCode:
 

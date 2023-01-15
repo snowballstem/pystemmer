@@ -1,7 +1,6 @@
 build
 dist
-libstemmer_c
-libstemmer_c.tgz
+libstemmer_c-*
 html
 MANIFEST
 Stemmer.so
