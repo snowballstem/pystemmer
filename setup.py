@@ -15,12 +15,12 @@ and information retrieval software; for example, a search with stemming
 enabled should be able to find a document containing "cycling" given the
 query "cycles".
 
-PyStemmer provides algorithms for several (mainly european) languages,
+PyStemmer provides algorithms for several (mainly European) languages,
 by wrapping the libstemmer library from the Snowball project in a Python
 module.
 
 It also provides access to the classic Porter stemming algorithm for
-english: although this has been superseded by an improved algorithm, the
+English: although this has been superseded by an improved algorithm, the
 original algorithm may be of interest to information retrieval
 researchers wishing to reproduce results of earlier experiments.
 
