@@ -208,7 +208,7 @@ setup(name='PyStemmer',
           "Topic :: Text Processing :: Indexing",
           "Topic :: Text Processing :: Linguistic",
       ],
-      setup_requires=['Cython>=0.28.5,<1.0', 'setuptools>=18.0'],
+      setup_requires=['Cython>=0.28.5', 'setuptools>=18.0'],
       ext_modules=[
           C_EXTENSION
       ],
