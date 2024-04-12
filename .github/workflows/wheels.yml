@@ -1,0 +1,36 @@
+name: Build manylinux wheels
+
+on: [push, pull_request]
+
+jobs:
+  build-wheels:
+    name: Build wheels on ${{ matrix.python-version }} for ${{ matrix.manylinux-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39]
+        manylinux-version: [manylinux2014]
+
+    services:
+      docker:
+        image: quay.io/pypa/${{ matrix.manylinux-version }}_x86_64
+        options: --user root
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Build wheels
+      run: |
+        docker exec docker python /opt/python/${{ matrix.python-version }}/bin/python setup.py bdist_wheel -d /io/wheelhouse
+
+    - name: Repair wheels
+      run: |
+        docker exec docker auditwheel repair /io/wheelhouse/*.whl -w /io/wheelhouse/repaired
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: wheels
+        path: wheelhouse/repaired/*.whl
+

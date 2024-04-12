@@ -21,6 +21,26 @@ code and the significantly better performance of PyStemmer.
 
 For more information, please check out the original repository: https://github.com/snowballstem/pystemmer
 
+## Installation
+
+To install `snowball_stemmer`, you can use `pip`:
+
+```bash
+pip install snowball_stemmer
+```
+
+To use inside python code:
+
+```python
+import snowball_stemmer
+
+print("All available languages: ", snowball_stemmer.algorithms())
+
+stemmer = snowball_stemmer.SnowballStemmer('english')
+stemmer.stemWord('running')
+# Output: 'run'
+```
+
 ## License
 
 PyStemmer is copyright (c) 2006, Richard Boulton, and is licensed under the MIT

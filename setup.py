@@ -26,7 +26,8 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '2.2.0.1'
+# version_str = '2.2.0.1'
+version_str = '0.1.0rc1'
 # libstemmer_c versions have 3 components but pystemmer versions may have more
 # (so we can address a pystemmer-specific issue without having to wait for the
 # next libstemmer_c release) so take the first 3 components from version_str.
@@ -117,16 +118,16 @@ LIBRARY_SOURCE_CODE = LibrarySourceCode()
 SYSTEM_LIBSTEMMER = os.environ.get('PYSTEMMER_SYSTEM_LIBSTEMMER', False)
 if SYSTEM_LIBSTEMMER:
     C_EXTENSION = Extension(
-        'Stemmer',
-        ['src/Stemmer.pyx'],
+        'snowball_stemmer',
+        ['src/snowball_stemmer.pyx'],
         libraries=['stemmer'],
     )
 else:
     if not LIBRARY_SOURCE_CODE.is_present_on_disk():
         LIBRARY_SOURCE_CODE.download()
     C_EXTENSION = Extension(
-        'Stemmer',
-        ['src/Stemmer.pyx'] + list(LIBRARY_SOURCE_CODE.source_code_paths()),
+        'snowball_stemmer',
+        ['src/snowball_stemmer.pyx'] + list(LIBRARY_SOURCE_CODE.source_code_paths()),
         include_dirs=LIBRARY_SOURCE_CODE.include_directories
     )
 
@@ -150,14 +151,12 @@ class BootstrapCommand(Command):
             self.libstemmer_url, self.libstemmer_sha256)
 
 
-setup(name='PyStemmer',
+setup(name='snowball_stemmer',
       version=version_str,
       author='Richard Boulton',
-      author_email='richard@tartarus.org',
-      maintainer='Richard Boulton',
-      maintainer_email='richard@tartarus.org',
-      url='https://github.com/snowballstem/pystemmer/',
-      description='Snowball stemming algorithms, for information retrieval',
+      maintainer='Richard Boulton, Xing Han Lu',
+      url='https://github.com/xhluca/snowball_stemmer',
+      description=' A fork of PyStemmer with pure wheels ',
       long_description=long_description,
       platforms=["any"],
       license="MIT, BSD",

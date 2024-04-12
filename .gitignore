@@ -9,3 +9,5 @@ Stemmer.so
 src/Stemmer.c
 *.pyc
 __pycache__
+venv/
+*.egg-info

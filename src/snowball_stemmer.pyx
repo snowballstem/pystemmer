@@ -1,4 +1,4 @@
-# Stemmer.pyx: Copyright (c) 2006, Richard Boulton
+# SnowballStemmer.pyx: Copyright (c) 2006, Richard Boulton
 # Pyrex interface to the snowball "libstemmer_c" library.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -78,7 +78,7 @@ def version():
     """
     return '2.0.1'
 
-cdef class Stemmer:
+cdef class SnowballStemmer:
     """An instance of a stemming algorithm.
 
     The algorithm has internal state, so must not be called concurrently.
