@@ -39,6 +39,8 @@ stemming algorithms likely aren't the right answer.
 Requirements
 ------------
 
+You need a working C compiler.
+
 Python header files should be installed.
 
 This version of PyStemmer has been CI tested using Python series 3.6, 3.7,
@@ -75,6 +77,15 @@ You can also install using ``pip``:
     * from PyPI: ``pip install pystemmer``
     * from a local copy of the code: ``pip install .``
     * from git: ``pip install git+git://github.com/snowballstem/pystemmer``
+
+If Python doesn't find your C compiler, you can set environment variable
+``CC`` to the C compiler to use, for example::
+
+    CC=gcc-14 python setup.py install
+
+or::
+
+    CC=/opt/bin/cc pip install pystemmer
 
 API
 ---
