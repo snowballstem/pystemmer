@@ -3,3 +3,4 @@ recursive-include sampledata *
 recursive-include docs *
 include src/Stemmer.pyx src/Stemmer.c
 include benchmark.py makedist.sh MANIFEST.in runtests.py
+prune libstemmer_c-*
