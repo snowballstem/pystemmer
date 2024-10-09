@@ -2,7 +2,11 @@ name: pip-install
 
 # Controls when the workflow will run
 on:
-  # Manual trigger from the Actions tab only
+  # Triggers only when this file changes.
+  push:
+    paths:
+      - .github/workflows/pip-install.yml
+  # Manual trigger from the Actions tab.
   workflow_dispatch:
 
 jobs:
