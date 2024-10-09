@@ -19,4 +19,4 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - name: Install
-      run: pip install $${{ matrix.pipoptions }} PyStemmer
+      run: pip install ${{ matrix.pipoptions }} PyStemmer
