@@ -26,7 +26,7 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '2.2.0.3'
+version_str = '3.0.0'
 # libstemmer_c versions have 3 components but pystemmer versions may have more
 # (so we can address a pystemmer-specific issue without having to wait for the
 # next libstemmer_c release) so take the first 3 components from version_str.
@@ -40,7 +40,7 @@ class LibrarySourceCode:
     DEFAULT_URI = 'https://snowballstem.org/dist/libstemmer_c-%s.tar.gz' % \
         libstemmer_c_version
     DEFAULT_CHECKSUM = \
-        'b941d9fe9cf36b4e2f8d3873cd4d8b8775bd94867a1df8d8c001bb8b688377c3'
+        'd4eca4485f6d3cb4387626a5f508b9b3489d24737525c23ba58026159497a8bc'
 
     def __init__(self, directory='libstemmer_c-%s' % libstemmer_c_version):
         """ Constructor.
@@ -174,18 +174,33 @@ setup(name='PyStemmer',
           "Intended Audience :: Developers",
           "License :: OSI Approved :: MIT License",
           "License :: OSI Approved :: BSD License",
+          "Natural Language :: Arabic",
+          "Natural Language :: Basque",
+          "Natural Language :: Catalan",
           "Natural Language :: Danish",
           "Natural Language :: Dutch",
           "Natural Language :: English",
+          "Natural Language :: Esperanto",
           "Natural Language :: Finnish",
           "Natural Language :: French",
           "Natural Language :: German",
+          "Natural Language :: Greek",
+          "Natural Language :: Hindi",
+          "Natural Language :: Hungarian",
+          "Natural Language :: Indonesian",
+          "Natural Language :: Irish",
           "Natural Language :: Italian",
+          "Natural Language :: Lithuanian",
+          "Natural Language :: Nepali",
           "Natural Language :: Norwegian",
           "Natural Language :: Portuguese",
+          "Natural Language :: Romanian",
           "Natural Language :: Russian",
+          "Natural Language :: Serbian",
           "Natural Language :: Spanish",
           "Natural Language :: Swedish",
+          "Natural Language :: Tamil",
+          "Natural Language :: Turkish",
           "Operating System :: OS Independent",
           "Programming Language :: C",
           "Programming Language :: Other",
