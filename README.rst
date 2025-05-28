@@ -67,8 +67,8 @@ that the tarball is already present before building.
 Installation
 ------------
 
-PyStemmer uses distutils, so all that is necessary to build and install
-PyStemmer is the usual distutils invocation::
+PyStemmer uses setuptools, so you should be able to build and install
+PyStemmer in the standard way::
 
     python setup.py install
 
