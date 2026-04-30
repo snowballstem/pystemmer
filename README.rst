@@ -44,11 +44,12 @@ You need a working C compiler.
 Python header files should be installed.
 
 This version of PyStemmer has been CI tested using Python series 3.8, 3.9,
-3.10, 3.11, 3.12, 3.13, 3.14, pypy and pypy3.
+3.10, 3.11, 3.12, 3.13, 3.14 and pypy3.
 
-We no longer actively support Python 2 as the Python developers stopped
-supporting it at the start of 2020. PyStemmer 2.2.0.1 was the final version
-which we tested with Python 2.
+We no longer support Python 2 as the Python developers stopped supporting it at
+the start of 2020.  PyStemmer 2.2.0.1 was the last release to officially
+support Python 2; PyStemmer 3.1.0 was the last release which had the code to
+support Python 2, but we were no longer testing it.
 
 PyStemmer can use a system install of libstemmer_c (from a package manager or
 an install you've previously done by hand).  To do this, make sure that the
