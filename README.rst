@@ -48,7 +48,7 @@ This version of PyStemmer has been CI tested using Python series 3.8, 3.9,
 
 We no longer support Python 2 as the Python developers stopped supporting it at
 the start of 2020.  PyStemmer 2.2.0.1 was the last release to officially
-support Python 2; PyStemmer 3.1.0 was the last release which had the code to
+support Python 2; PyStemmer 3.0.0 was the last release which had the code to
 support Python 2, but we were no longer testing it.
 
 PyStemmer can use a system install of libstemmer_c (from a package manager or
