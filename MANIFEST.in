@@ -1,4 +1,4 @@
-include LICENSE ChangeLog HACKING
+include LICENSE HACKING
 recursive-include sampledata *
 recursive-include docs *
 include src/Stemmer.pyx src/Stemmer.c
