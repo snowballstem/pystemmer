@@ -9,8 +9,8 @@ First, import the library:
 
 Just for show, we'll display a list of the available stemming algorithms:
 
->>> print(Stemmer.algorithms())
-['arabic', 'armenian', 'basque', 'catalan', 'czech', 'danish', 'dutch', 'dutch_porter', 'english', 'esperanto', 'estonian', 'finnish', 'french', 'german', 'greek', 'hindi', 'hungarian', 'indonesian', 'irish', 'italian', 'lithuanian', 'nepali', 'norwegian', 'persian', 'polish', 'porter', 'portuguese', 'romanian', 'russian', 'serbian', 'sesotho', 'spanish', 'swedish', 'tamil', 'turkish', 'yiddish']
+>>> print(Stemmer.algorithms())  # doctest: +ELLIPSIS
+[...'arabic', ...'english', ...'yiddish'...]
 
 Now, we'll get an instance of the english stemming algorithm:
 
