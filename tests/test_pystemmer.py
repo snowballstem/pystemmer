@@ -71,8 +71,9 @@ class PyStemmerGermanTests(PyStemmerBaseTestCase):
         self.stemmer = self.get_stemmer('german')
 
     def test_stemWord(self):
-        self.assertEqual(self.stemmer.stemWord('Fahrradfahren'), 'Fahrradfahr')
-        self.assertEqual(self.stemmer.stemWord('Rad fahren'), 'Rad fahr')
+        self.assertEqual(self.stemmer.stemWord('fahrradfahren'), 'fahrradfahr')
+        self.assertEqual(self.stemmer.stemWord('rad'), 'rad')
+        self.assertEqual(self.stemmer.stemWord('fahren'), 'fahr')
 
 
 class PyStemmerRussianTests(PyStemmerBaseTestCase):
@@ -98,6 +99,7 @@ class PyStemmerHungarianTests(PyStemmerBaseTestCase):
         self.stemmer = self.get_stemmer('hungarian')
 
     def test_stemWord(self):
-        word = b'Fut\xc3\xa1s k\xc3\xb6zben'.decode('utf-8')
-        stem = b'Fut\xc3\xa1s k\xc3\xb6z'.decode('utf-8')
-        self.assertEqual(self.stemmer.stemWord(word), stem)
+        self.assertEqual(self.stemmer.stemWord(b'fut\xc3\xa1s'.decode('utf-8')),
+                         b'fut\xc3\xa1s'.decode('utf-8'))
+        self.assertEqual(self.stemmer.stemWord(b'k\xc3\xb6zben'.decode('utf-8')),
+                         b'k\xc3\xb6z'.decode('utf-8'))
