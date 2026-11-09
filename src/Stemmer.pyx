@@ -1,3 +1,4 @@
+# cython: freethreading_compatible = True
 # Stemmer.pyx: Copyright (c) 2006, Richard Boulton
 # Pyrex interface to the snowball "libstemmer_c" library.
 #

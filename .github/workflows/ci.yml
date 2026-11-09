@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13', '3.14', '3.15', 'pypy3.7', 'pypy3.8', 'pypy3.9', 'pypy3.10']
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13', '3.14', '3.15', '3.15t', 'pypy3.7', 'pypy3.8', 'pypy3.9', 'pypy3.10']
         include:
           # Default to ubuntu-latest
           - os: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
     - name: Check out repository code
       uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install Cython

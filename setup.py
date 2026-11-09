@@ -236,7 +236,8 @@ setup(name='PyStemmer',
       setup_requires=[
           'Cython>=0.28.5; python_version < "3.15"',
           'Cython>=3.3; python_version >= "3.15"',
-          'setuptools>=18.0',
+          'setuptools>=18.0; python_version < "3.15"',
+          'setuptools>=75.7; python_version >= "3.15"',
       ],
       ext_modules=[
           C_EXTENSION
