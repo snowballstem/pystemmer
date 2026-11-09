@@ -49,11 +49,9 @@ a fresh object for each word stemmed, since there's some cost to creating and
 destroying the object.  Reusing the object is also needed to benefit from the
 caching.
 
-The stemmer code is re-entrant, but not thread-safe if the same stemmer object
-is used concurrently in different threads.
+Stemmer objects can be shared safely between threads.  Each instance serializes
+access to its stemming state and cache, including changes to ``maxCacheSize``.
 
-If you want to perform stemming concurrently in different threads, we suggest
-creating a new stemmer object for each thread.  The alternative is to share
-stemmer objects between threads and protect access using a mutex or similar
-(e.g. `threading.Lock` in Python) but that's liable to slow your program down
-as threads can end up waiting for the lock.
+For parallel stemming on free-threaded Python, use a separate instance per
+thread.  ``stemWords()`` serializes each word, allowing other calls between
+words.

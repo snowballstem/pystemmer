@@ -44,7 +44,7 @@ You need a working C compiler.
 Python header files should be installed.
 
 This version of PyStemmer has been CI tested using Python series 3.8, 3.9,
-3.10, 3.11, 3.12, 3.13, 3.14 and pypy3.
+3.10, 3.11, 3.12, 3.13, 3.14, 3.15, 3.15t and pypy3.
 
 We no longer support Python 2 as the Python developers stopped supporting it at
 the start of 2020.  PyStemmer 2.2.0.1 was the last release to officially
