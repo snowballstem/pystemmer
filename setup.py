@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from setuptools import setup, Command, Extension
+from setuptools.command.sdist import sdist
 import os
 
 
@@ -150,6 +151,14 @@ class BootstrapCommand(Command):
             self.libstemmer_url, self.libstemmer_sha256)
 
 
+class SDistCommand(sdist):
+    def run(self):
+        # Ensure the sdist is self-contained even when building with a system
+        # libstemmer, where the extension setup does not need these sources.
+        LIBRARY_SOURCE_CODE.download()
+        sdist.run(self)
+
+
 setup(name='PyStemmer',
       version=version_str,
       author='Richard Boulton',
@@ -236,5 +245,8 @@ setup(name='PyStemmer',
       ext_modules=[
           C_EXTENSION
       ],
-      cmdclass={'bootstrap': BootstrapCommand}
+      cmdclass={
+          'bootstrap': BootstrapCommand,
+          'sdist': SDistCommand,
+      }
       )

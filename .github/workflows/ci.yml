@@ -44,3 +44,18 @@ jobs:
         printf 'Running tests with '; python --version
         python runtests.py -v
         pytest -v
+    - name: Build source distribution
+      if: matrix.python-version == '3.14'
+      run: python setup.py sdist
+    - name: Build wheel from source distribution without network
+      if: matrix.python-version == '3.14'
+      env:
+        PIP_NO_INDEX: "1"
+        http_proxy: http://127.0.0.1:9
+        https_proxy: http://127.0.0.1:9
+      run: |
+        python -m pip wheel \
+          --no-build-isolation \
+          --no-deps \
+          --wheel-dir /tmp/wheels \
+          dist/*.tar.gz
