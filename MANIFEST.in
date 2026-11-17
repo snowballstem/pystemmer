@@ -1,6 +1,8 @@
 include LICENSE HACKING
 recursive-include sampledata *
 recursive-include docs *
+recursive-include tests *
 include src/Stemmer.pyx src/Stemmer.c
-include benchmark.py makedist.sh MANIFEST.in runtests.py
+include benchmark.py makedist.sh MANIFEST.in runtests.py tarballfetcher.py
+include libstemmer_c-*.tar.gz
 prune libstemmer_c-*

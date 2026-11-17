@@ -59,11 +59,14 @@ with a ``-dev`` or ``--devel`` suffix) and set environment variable
 
 Otherwise PyStemmer will do a private build of libstemmer_c and use that.
 It looks for a tarball of the corresponding libstemmer_c release in the top
-level directory, and will attempt to automatically download it if not
-present (with a checksum check).  If you want to avoid the downloading step
-(for example, to build in an environment which doesn't allow internet access,
-or to avoid build failures due to connectivity problems) you can make sure
-that the tarball is already present before building.
+level directory.  The source distribution published on PyPI includes this
+tarball, so building from it does not need network access.
+
+When building from a git checkout, PyStemmer will attempt to download the
+tarball if it is not present (with a checksum check).  To avoid the download
+(for example, to build in an environment which doesn't allow internet access),
+make sure that the tarball is already present before building or set
+``PYSTEMMER_SYSTEM_LIBSTEMMER`` as described above.
 
 Installation
 ------------
